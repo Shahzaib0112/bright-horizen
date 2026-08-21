@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bright Horizons | Software House & Computer Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a0e27;
+    --deep-blue: #0d1b4b;
+    --royal: #1a3a8a;
+    --electric: #1e6fff;
+    --cyan: #00c8ff;
+    --light-cyan: #7ee8ff;
+    --white: #f0f8ff;
+    --muted: #8aa8cc;
+    --card-bg: rgba(13,27,75,0.6);
+    --glass: rgba(30,111,255,0.08);
+    --border: rgba(0,200,255,0.2);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Exo 2', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ─── GRID BACKGROUND ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,200,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,200,255,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--navy); }
+  ::-webkit-scrollbar-thumb { background: var(--electric); border-radius: 3px; }
+
+  /* ══════════════════════════════
+     HEADER / NAV
+  ══════════════════════════════ */
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 0 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+    background: rgba(10,14,39,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s;
+  }
+
+  .logo-wrap img {
+    height: 46px;
+    filter: drop-shadow(0 0 12px rgba(0,200,255,0.5));
+    transition: filter 0.3s;
+  }
+  .logo-wrap img:hover { filter: drop-shadow(0 0 20px rgba(0,200,255,0.9)); }
+
+  nav { display: flex; align-items: center; gap: 8px; }
+
+  nav a {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 4px;
+    position: relative;
+    transition: color 0.3s;
+  }
+  nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 4px; left: 14px; right: 14px;
+    height: 1px;
+    background: var(--cyan);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+  nav a:hover { color: var(--cyan); }
+  nav a:hover::after { transform: scaleX(1); }
+
+  .nav-cta {
+    background: linear-gradient(135deg, var(--electric), var(--cyan));
+    color: var(--navy) !important;
+    font-weight: 700 !important;
+    padding: 10px 20px !important;
+    border-radius: 6px;
+    box-shadow: 0 0 20px rgba(0,200,255,0.3);
+    transition: box-shadow 0.3s, transform 0.2s !important;
+  }
+  .nav-cta:hover { box-shadow: 0 0 35px rgba(0,200,255,0.6); transform: translateY(-1px); }
+  .nav-cta::after { display: none !important; }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; }
+  .hamburger span { width: 24px; height: 2px; background: var(--cyan); border-radius: 2px; transition: all 0.3s; }
+
+  /* ══════════════════════════════
+     HERO
+  ══════════════════════════════ */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 5% 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Orb glows */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    animation: orbFloat 8s ease-in-out infinite;
+  }
+  .orb-1 { width: 500px; height: 500px; background: rgba(30,111,255,0.18); top: -100px; left: -150px; animation-delay: 0s; }
+  .orb-2 { width: 400px; height: 400px; background: rgba(0,200,255,0.12); bottom: -80px; right: -100px; animation-delay: -3s; }
+  .orb-3 { width: 300px; height: 300px; background: rgba(30,111,255,0.1); top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: -6s; }
+
+  @keyframes orbFloat {
+    0%,100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-30px) scale(1.05); }
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 900px; }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--cyan);
+    border: 1px solid var(--border);
+    padding: 8px 20px;
+    border-radius: 50px;
+    background: rgba(0,200,255,0.06);
+    margin-bottom: 30px;
+    animation: fadeSlideUp 0.8s ease both;
+  }
+  .hero-badge::before { content: '⬡'; font-size: 1rem; }
+
+  .hero-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    animation: fadeSlideUp 0.8s 0.15s ease both;
+  }
+
+  .hero-title .line-1 { color: var(--white); display: block; }
+  .hero-title .line-2 {
+    display: block;
+    background: linear-gradient(90deg, var(--electric), var(--cyan), var(--light-cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: var(--muted);
+    max-width: 600px;
+    margin: 0 auto 40px;
+    line-height: 1.8;
+    animation: fadeSlideUp 0.8s 0.3s ease both;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeSlideUp 0.8s 0.45s ease both;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--electric), var(--cyan));
+    color: var(--navy);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 16px 36px;
+    border-radius: 6px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 0 30px rgba(0,200,255,0.35), 0 8px 32px rgba(0,0,0,0.3);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--cyan), var(--electric));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 0 50px rgba(0,200,255,0.55), 0 12px 40px rgba(0,0,0,0.4); }
+  .btn-primary:hover::before { opacity: 1; }
+  .btn-primary span { position: relative; z-index: 1; }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--cyan);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    padding: 15px 36px;
+    border-radius: 6px;
+    text-decoration: none;
+    border: 1px solid var(--cyan);
+    transition: all 0.3s;
+  }
+  .btn-outline:hover { background: rgba(0,200,255,0.1); transform: translateY(-3px); box-shadow: 0 0 25px rgba(0,200,255,0.2); }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin-top: 70px;
+    padding-top: 50px;
+    border-top: 1px solid var(--border);
+    animation: fadeSlideUp 0.8s 0.6s ease both;
+    flex-wrap: wrap;
+  }
+
+  .stat-item { text-align: center; }
+  .stat-num {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--electric), var(--cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block;
+  }
+  .stat-label { font-size: 0.8rem; color: var(--muted); letter-spacing: 0.08em; margin-top: 4px; }
+
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ══════════════════════════════
+     SECTIONS SHARED
+  ══════════════════════════════ */
+  section { padding: 100px 5%; position: relative; z-index: 1; }
+
+  .section-tag {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--cyan);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .section-tag::before, .section-tag::after {
+    content: '';
+    height: 1px;
+    width: 30px;
+    background: var(--cyan);
+    opacity: 0.5;
+  }
+
+  .section-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .gradient-text {
+    background: linear-gradient(90deg, var(--electric), var(--cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .section-desc {
+    color: var(--muted);
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.8;
+    max-width: 560px;
+  }
+
+  /* ══════════════════════════════
+     ABOUT
+  ══════════════════════════════ */
+  #about { background: linear-gradient(180deg, transparent, rgba(13,27,75,0.4), transparent); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .about-visual {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .about-logo-frame {
+    width: 380px;
+    height: 300px;
+    border-radius: 30px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+  }
+
+  /* .about-logo-frame::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg, var(--electric), transparent, var(--cyan), transparent);
+    border-radius: 30px;
+    z-index: -1;
+    animation: borderSpin 4s linear infinite;
+  } */
+
+  @keyframes borderSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .about-logo-frame img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    filter: drop-shadow(0 0 30px rgba(0,200,255,0.6));
+    animation: pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { filter: drop-shadow(0 0 30px rgba(0,200,255,0.6)); }
+    50% { filter: drop-shadow(0 0 50px rgba(0,200,255,0.9)); }
+  }
+
+  /* Corner accents */
+  .corner { position: absolute; width: 20px; height: 20px; }
+  .corner.tl { top: -1px; left: -1px; border-top: 2px solid var(--cyan); border-left: 2px solid var(--cyan); }
+  .corner.tr { top: -1px; right: -1px; border-top: 2px solid var(--cyan); border-right: 2px solid var(--cyan); }
+  .corner.bl { bottom: -1px; left: -1px; border-bottom: 2px solid var(--cyan); border-left: 2px solid var(--cyan); }
+  .corner.br { bottom: -1px; right: -1px; border-bottom: 2px solid var(--cyan); border-right: 2px solid var(--cyan); }
+
+  .about-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 36px;
+  }
+
+  .feature-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--glass);
+    border: 1px solid var(--border);
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    transition: all 0.3s;
+  }
+  .feature-pill:hover { border-color: var(--cyan); color: var(--white); background: rgba(0,200,255,0.08); }
+  .feature-pill .icon { font-size: 1.2rem; }
+
+  /* ══════════════════════════════
+     COURSES
+  ══════════════════════════════ */
+  #courses { background: transparent; }
+
+  .courses-header { text-align: center; margin-bottom: 60px; }
+  .courses-header .section-desc { margin: 0 auto; }
+
+  .courses-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .course-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px 28px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s;
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+  }
+
+  .course-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--electric), var(--cyan));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+
+  .course-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(0,200,255,0.4);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(0,200,255,0.1);
+  }
+  .course-card:hover::before { transform: scaleX(1); }
+
+  .course-icon {
+    width: 60px; height: 60px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(30,111,255,0.3), rgba(0,200,255,0.2));
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+
+  .course-level {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: var(--cyan);
+    background: rgba(0,200,255,0.1);
+    border: 1px solid rgba(0,200,255,0.2);
+    padding: 4px 12px;
+    border-radius: 50px;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+
+  .course-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+
+  .course-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .course-meta {
+    display: flex;
+    gap: 16px;
+    font-size: 0.75rem;
+    color: var(--muted);
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .course-meta span { display: flex; align-items: center; gap: 5px; }
+
+  /* ══════════════════════════════
+     TEAM
+  ══════════════════════════════ */
+  #team {
+    background: linear-gradient(180deg, transparent, rgba(13,27,75,0.5), transparent);
+  }
+
+  .team-header { text-align: center; margin-bottom: 60px; }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .team-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px 24px;
+    text-align: center;
+    transition: all 0.4s;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .team-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 0;
+    background: linear-gradient(0deg, rgba(0,200,255,0.06), transparent);
+    transition: height 0.4s;
+  }
+
+  .team-card:hover { transform: translateY(-6px); border-color: rgba(0,200,255,0.35); }
+  .team-card:hover::after { height: 100%; }
+
+  .team-avatar {
+    width: 90px; height: 90px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--royal), var(--electric));
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--white);
+    border: 2px solid var(--border);
+    box-shadow: 0 0 20px rgba(0,200,255,0.2);
+    position: relative;
+    z-index: 1;
+  }
+
+  .team-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 6px;
+    position: relative; z-index: 1;
+  }
+
+  .team-role {
+    font-size: 0.8rem;
+    color: var(--cyan);
+    letter-spacing: 0.06em;
+    margin-bottom: 14px;
+    position: relative; z-index: 1;
+  }
+
+  .team-bio {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.6;
+    position: relative; z-index: 1;
+  }
+
+  .team-socials {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 16px;
+    position: relative; z-index: 1;
+  }
+
+  .social-btn {
+    width: 32px; height: 32px;
+    border-radius: 6px;
+    background: var(--glass);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  .social-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  /* ══════════════════════════════
+     FAQs
+  ══════════════════════════════ */
+  #faqs { background: transparent; }
+
+  .faqs-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 80px;
+    max-width: 1100px;
+    margin: 0 auto;
+    align-items: start;
+  }
+
+  .faq-list { display: flex; flex-direction: column; gap: 12px; }
+
+  .faq-item {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    transition: border-color 0.3s;
+  }
+
+  .faq-item.open { border-color: rgba(0,200,255,0.4); }
+
+  .faq-q {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--white);
+    gap: 16px;
+    transition: color 0.3s;
+  }
+  .faq-item.open .faq-q { color: var(--cyan); }
+
+  .faq-toggle {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    color: var(--cyan);
+    flex-shrink: 0;
+    transition: transform 0.3s, background 0.3s;
+  }
+  .faq-item.open .faq-toggle { transform: rotate(45deg); background: rgba(0,200,255,0.1); }
+
+  .faq-a {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.8;
+    padding: 0 24px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s;
+  }
+  .faq-item.open .faq-a { max-height: 200px; padding: 0 24px 20px; }
+
+  /* ══════════════════════════════
+     CONTACT
+  ══════════════════════════════ */
+  #contact {
+    background: linear-gradient(180deg, transparent, rgba(13,27,75,0.6), transparent);
+  }
+
+  .contact-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 80px;
+    max-width: 1100px;
+    margin: 0 auto;
+    align-items: start;
+  }
+
+  .contact-info { display: flex; flex-direction: column; gap: 24px; }
+
+  .contact-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s;
+  }
+  .contact-card:hover { border-color: rgba(0,200,255,0.4); transform: translateX(4px); }
+
+  .contact-icon {
+    width: 48px; height: 48px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(30,111,255,0.3), rgba(0,200,255,0.2));
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+
+  .contact-card-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: var(--cyan);
+    margin-bottom: 4px;
+  }
+  .contact-card-val { font-size: 0.9rem; color: var(--white); font-weight: 500; }
+
+  .contact-form {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px;
+    backdrop-filter: blur(20px);
+  }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+
+  .form-group label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    color: var(--cyan);
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    background: rgba(10,14,39,0.6);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    color: var(--white);
+    font-family: 'Exo 2', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    width: 100%;
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: rgba(138,168,204,0.5); }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-color: var(--cyan);
+    box-shadow: 0 0 15px rgba(0,200,255,0.15);
+  }
+
+  .form-group textarea { resize: vertical; min-height: 120px; }
+  .form-group select option { background: var(--deep-blue); }
+
+  .btn-submit {
+    width: 100%;
+    background: linear-gradient(135deg, var(--electric), var(--cyan));
+    color: var(--navy);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    padding: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 0 25px rgba(0,200,255,0.3);
+  }
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 0 45px rgba(0,200,255,0.5); }
+
+  /* ══════════════════════════════
+     FOOTER
+  ══════════════════════════════ */
+  footer {
+    background: rgba(5,8,20,0.98);
+    border-top: 1px solid var(--border);
+    padding: 60px 5% 30px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr 1fr 1fr;
+    gap: 50px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .footer-brand img {
+    height: 50px;
+    filter: drop-shadow(0 0 10px rgba(0,200,255,0.4));
+    margin-bottom: 20px;
+  }
+
+  .footer-brand p {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  .footer-heading {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--cyan);
+    margin-bottom: 20px;
+  }
+
+  .footer-links { display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a {
+    font-size: 0.875rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .footer-links a::before { content: '›'; color: var(--electric); }
+  .footer-links a:hover { color: var(--white); }
+
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 40px auto 0;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    color: var(--muted);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-bottom span { color: var(--cyan); }
+
+  .footer-social { display: flex; gap: 10px; }
+  .footer-social a {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    background: var(--glass);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+  }
+  .footer-social a:hover { border-color: var(--cyan); color: var(--cyan); box-shadow: 0 0 12px rgba(0,200,255,0.2); }
+
+  /* ══════════════════════════════
+     MOBILE NAV OVERLAY
+  ══════════════════════════════ */
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    top: 80px; left: 0; right: 0; bottom: 0;
+    background: rgba(10,14,39,0.98);
+    backdrop-filter: blur(20px);
+    z-index: 999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    border-top: 1px solid var(--border);
+  }
+  .mobile-nav.open { display: flex; }
+  .mobile-nav a {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    transition: color 0.3s;
+  }
+  .mobile-nav a:hover { color: var(--cyan); }
+
+  /* ══════════════════════════════
+     REVEAL ANIMATION
+  ══════════════════════════════ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ══════════════════════════════
+     RESPONSIVE
+  ══════════════════════════════ */
+  @media (max-width: 1024px) {
+    .courses-grid { grid-template-columns: repeat(2, 1fr); }
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  }
+
+  @media (max-width: 768px) {
+    header nav, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+
+    .about-grid, .faqs-wrap, .contact-wrap { grid-template-columns: 1fr; gap: 48px; }
+    .about-logo-frame { width: 280px; height: 280px; }
+    .courses-grid { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-stats { gap: 32px; }
+    .about-features { grid-template-columns: 1fr; }
+  }
+
+  /* ══════════════════════════════
+     FLOATING PARTICLES
+  ══════════════════════════════ */
+  .particles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .particle {
+    position: absolute;
+    width: 2px; height: 2px;
+    background: var(--cyan);
+    border-radius: 50%;
+    opacity: 0;
+    animation: particleFly var(--dur) linear var(--delay) infinite;
+    left: var(--x);
+    top: 100%;
+  }
+
+  @keyframes particleFly {
+    0% { opacity: 0; top: 100%; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.4; }
+    100% { opacity: 0; top: -5%; }
+  }
+
+  /* Divider line */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Highlight line in about section */
+  .highlight-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--cyan);
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin: 8px 0;
+  }
+  .highlight-line::before { content: '◈'; font-size: 0.8rem; }
+</style>
+</head>
+<body>
+
+<!-- PARTICLES -->
+<div class="particles" id="particles"></div>
+
+<!-- ═══════════════════════════════════
+     HEADER
+═══════════════════════════════════ -->
+<header id="header">
+  <a href="#hero" class="logo-wrap">
+    <img src="images/Bright horizen logo.png" alt="brighthorizons">
+  </a>
+
+  <nav>
+    <a href="#about">About</a>
+    <a href="#courses">Courses</a>
+    <a href="#team">Team</a>
+    <a href="#faqs">FAQs</a>
+    <a href="#contact" class="nav-cta">Enroll Now</a>
+  </nav>
+
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</header>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#courses" onclick="toggleMenu()">Courses</a>
+  <a href="#team" onclick="toggleMenu()">Team</a>
+  <a href="#faqs" onclick="toggleMenu()">FAQs</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+</div>
+
+<!-- ═══════════════════════════════════
+     HERO
+═══════════════════════════════════ -->
+<section id="hero">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">SOFTWARE HOUSE & COMPUTER ACADEMY</div>
+
+    <h1 class="hero-title">
+      <span class="line-1">Empowering the</span>
+      <span class="line-2">Digital Future</span>
+    </h1>
+
+    <p class="hero-sub">
+      Bright Horizons blends world-class software development with industry-leading
+      tech education — where professionals are built and innovations are born.
+    </p>
+
+    <div class="hero-btns">
+      <a href="#courses" class="btn-primary"><span>Explore Courses</span></a>
+      <a href="#about" class="btn-outline">Learn More</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num">500+</span>
+        <div class="stat-label">GRADUATES</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">20+</span>
+        <div class="stat-label">COURSES</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">15+</span>
+        <div class="stat-label">EXPERT TRAINERS</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">98%</span>
+        <div class="stat-label">SUCCESS RATE</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     ABOUT
+═══════════════════════════════════ -->
+<section id="about">
+  <div class="about-grid reveal">
+    <div class="about-visual">
+      <div class="about-logo-frame">
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+        <div class="corner bl"></div>
+        <div class="corner br"></div>
+        <img src="images/academy images.jpg" alt="brighthorizons logo">
+      </div>
+
+      <div class="about-logo-frame">
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+        <div class="corner bl"></div>
+        <div class="corner br"></div>
+        <img src="images/academy 2.png" alt="brighthorizons logo">
+      </div>
+    </div>
+
+    <div>
+      <div class="section-tag">ABOUT US</div>
+      <h2 class="section-title">Where <span class="gradient-text">Technology</span><br>Meets Education</h2>
+      <p class="section-desc">
+        Bright Horizons is a premier software house and computer academy dedicated to nurturing
+        the next generation of tech professionals. We combine hands-on project experience
+        with structured learning to ensure our students are industry-ready.
+      </p>
+
+      <div style="margin-top: 28px; display: flex; flex-direction: column; gap: 10px;">
+        <div class="highlight-line">Expert-led, industry-aligned curriculum</div>
+        <div class="highlight-line">Real-world projects with live clients</div>
+        <div class="highlight-line">Career placement assistance & mentoring</div>
+        <div class="highlight-line">Flexible timing — morning & evening batches</div>
+      </div>
+
+      <div class="about-features">
+        <div class="feature-pill"><span class="icon">🖥️</span> Software Development</div>
+        <div class="feature-pill"><span class="icon">🎓</span> Computer Academy</div>
+        <div class="feature-pill"><span class="icon">🌐</span> Web & Mobile Apps</div>
+        <div class="feature-pill"><span class="icon">🤖</span> AI & Data Science</div>
+        <div class="feature-pill"><span class="icon">🎨</span> UI/UX Design</div>
+        <div class="feature-pill"><span class="icon">🔐</span> Cybersecurity</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     COURSES
+═══════════════════════════════════ -->
+<section id="courses">
+  <div class="courses-header reveal">
+    <div class="section-tag" style="justify-content:center;">OUR PROGRAMS</div>
+    <h2 class="section-title">Industry-Ready <span class="gradient-text">Courses</span></h2>
+    <p class="section-desc">Carefully crafted programs taught by industry veterans to give you the skills that employers demand.</p>
+  </div>
+
+  <div class="courses-grid reveal">
+
+    <div class="course-card">
+      <div class="course-icon">💻</div>
+      <div class="course-level">BEGINNER → PRO</div>
+      <div class="course-name">Web Development</div>
+      <p class="course-desc">Master HTML, CSS, JavaScript, React & Node.js with real deployment projects on live servers.</p>
+      <div class="course-meta">
+        <span>⏱ 6 Months</span>
+        <span>👥 Live Classes</span>
+        <span>📜 Certificate</span>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <div class="course-icon">📱</div>
+      <div class="course-level">INTERMEDIATE</div>
+      <div class="course-name">Mobile App Development</div>
+      <p class="course-desc">Build cross-platform apps with Flutter & React Native — from concept to Play Store launch.</p>
+      <div class="course-meta">
+        <span>⏱ 5 Months</span>
+        <span>👥 Live Classes</span>
+        <span>📜 Certificate</span>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <div class="course-icon">🤖</div>
+      <div class="course-level">ADVANCED</div>
+      <div class="course-name">AI & Machine Learning</div>
+      <p class="course-desc">Python, TensorFlow, model training, NLP, and deploying AI solutions in the real world.</p>
+      <div class="course-meta">
+        <span>⏱ 8 Months</span>
+        <span>👥 Live Classes</span>
+        <span>📜 Certificate</span>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <div class="course-icon">🎨</div>
+      <div class="course-level">BEGINNER → PRO</div>
+      <div class="course-name">UI/UX Design</div>
+      <p class="course-desc">Figma, design systems, prototyping, and user research methodologies for product teams.</p>
+      <div class="course-meta">
+        <span>⏱ 3 Months</span>
+        <span>👥 Live Classes</span>
+        <span>📜 Certificate</span>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <div class="course-icon">🔐</div>
+      <div class="course-level">INTERMEDIATE</div>
+      <div class="course-name">Cybersecurity</div>
+      <p class="course-desc">Ethical hacking, penetration testing, network security, and CEH exam preparation.</p>
+      <div class="course-meta">
+        <span>⏱ 6 Months</span>
+        <span>👥 Live Classes</span>
+        <span>📜 Certificate</span>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <div class="course-icon">📊</div>
+      <div class="course-level">BEGINNER → PRO</div>
+      <div class="course-name">Data Science & Analytics</div>
+      <p class="course-desc">Excel, SQL, Power BI, Python Pandas & visualization — turn data into decisions.</p>
+      <div class="course-meta">
+        <span>⏱ 4 Months</span>
+        <span>👥 Live Classes</span>
+        <span>📜 Certificate</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     TEAM
+═══════════════════════════════════ -->
+<section id="team">
+  <div class="team-header reveal">
+    <div class="section-tag" style="justify-content:center;">MEET THE EXPERTS</div>
+    <h2 class="section-title">Our <span class="gradient-text">Dedicated Team</span></h2>
+    <p class="section-desc" style="margin:0 auto;">Seasoned professionals passionate about tech education and software excellence.</p>
+  </div>
+
+  <div class="team-grid reveal">
+
+    <div class="team-card">
+      <div class="team-avatar">AK</div>
+      <div class="team-name">Ahmed Khan</div>
+      <div class="team-role">Founder & CEO</div>
+      <p class="team-bio">12+ years in software engineering & edtech. Passionate about building Pakistan's digital talent pipeline.</p>
+      <div class="team-socials">
+        <a href="#" class="social-btn">in</a>
+        <a href="#" class="social-btn">𝕏</a>
+        <a href="#" class="social-btn">🌐</a>
+      </div>
+    </div>
+
+    <div class="team-card">
+      <div class="team-avatar" style="background: linear-gradient(135deg,#0d5fbb,#00c8ff);">SR</div>
+      <div class="team-name">Sara Raza</div>
+      <div class="team-role">Lead Web Instructor</div>
+      <p class="team-bio">Full-stack developer & educator with 8 years of React and Node.js expertise in enterprise projects.</p>
+      <div class="team-socials">
+        <a href="#" class="social-btn">in</a>
+        <a href="#" class="social-btn">𝕏</a>
+        <a href="#" class="social-btn">🌐</a>
+      </div>
+    </div>
+
+    <div class="team-card">
+      <div class="team-avatar" style="background: linear-gradient(135deg,#1a6e3c,#00c8a0);">UQ</div>
+      <div class="team-name">Usman Qureshi</div>
+      <div class="team-role">AI & ML Specialist</div>
+      <p class="team-bio">PhD candidate in Computer Science. Research in NLP and computer vision, 6 published papers.</p>
+      <div class="team-socials">
+        <a href="#" class="social-btn">in</a>
+        <a href="#" class="social-btn">𝕏</a>
+        <a href="#" class="social-btn">🌐</a>
+      </div>
+    </div>
+
+    <div class="team-card">
+      <div class="team-avatar" style="background: linear-gradient(135deg,#6b1a8a,#c040ff);">FA</div>
+      <div class="team-name">Fatima Ali</div>
+      <div class="team-role">UI/UX Design Lead</div>
+      <p class="team-bio">Award-winning designer with 200+ product designs shipped. Former design lead at a fintech startup.</p>
+      <div class="team-socials">
+        <a href="#" class="social-btn">in</a>
+        <a href="#" class="social-btn">𝕏</a>
+        <a href="#" class="social-btn">🌐</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     FAQs
+═══════════════════════════════════ -->
+<section id="faqs">
+  <div class="faqs-wrap reveal">
+    <div>
+      <div class="section-tag">FAQS</div>
+      <h2 class="section-title">Common <span class="gradient-text">Questions</span></h2>
+      <p class="section-desc">
+        Everything you need to know before taking the first step into your tech career.
+      </p>
+      <div style="margin-top: 36px;">
+        <a href="#contact" class="btn-primary"><span>Still Have Questions?</span></a>
+      </div>
+    </div>
+
+    <div class="faq-list" id="faqList">
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Do I need prior experience to enroll?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">No prior experience is required for our beginner tracks. We start from the very basics and gradually advance. For intermediate and advanced courses, a basic understanding of programming is recommended.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Are classes online or in-person?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">We offer both! In-person classes are held at our Karachi campus, and live online sessions are streamed simultaneously for remote students. Recorded lectures are available for review anytime.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          What certificate will I receive?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">Upon successful completion of your course and final project, you receive an industry-recognized Bright Horizons certificate, along with a digital badge you can share on LinkedIn.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Is there job placement support?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">Absolutely! We have an active career portal, regular job fairs, and dedicated placement counselors who help connect graduates with our network of 80+ hiring partner companies.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          What are the payment options?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">We offer flexible installment plans, scholarships for top performers, and early-bird discounts. Contact our admissions team for a personalized fee breakdown based on your chosen program.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          How long are the courses?
+          <div class="faq-toggle">+</div>
+        </div>
+        <div class="faq-a">Course durations range from 3 to 8 months depending on the program. Each course includes lectures, lab sessions, assignments, and a capstone project. Classes run 3–4 days per week.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     CONTACT
+═══════════════════════════════════ -->
+<section id="contact">
+  <div class="contact-wrap reveal">
+    <div>
+      <div class="section-tag">GET IN TOUCH</div>
+      <h2 class="section-title">Start Your <span class="gradient-text">Journey</span></h2>
+      <p class="section-desc" style="margin-bottom: 36px;">
+        Ready to level up? Reach out and our admissions team will guide you to the perfect program.
+      </p>
+
+      <div class="contact-info">
+        <div class="contact-card">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-card-label">LOCATION</div>
+            <div class="contact-card-val">Karachi, Sindh, Pakistan</div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">📞</div>
+          <div>
+            <div class="contact-card-label">PHONE</div>
+            <div class="contact-card-val">+92 300 0000000</div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">✉️</div>
+          <div>
+            <div class="contact-card-label">EMAIL</div>
+            <div class="contact-card-val">info@brighthorizons.com</div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">⏰</div>
+          <div>
+            <div class="contact-card-label">HOURS</div>
+            <div class="contact-card-val">Mon – Sat: 9:00 AM – 9:00 PM</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>FIRST NAME</label>
+          <input type="text" placeholder="Ahmed">
+        </div>
+        <div class="form-group">
+          <label>LAST NAME</label>
+          <input type="text" placeholder="Khan">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>EMAIL ADDRESS</label>
+        <input type="email" placeholder="you@example.com">
+      </div>
+      <div class="form-group">
+        <label>PHONE NUMBER</label>
+        <input type="tel" placeholder="+92 300 0000000">
+      </div>
+      <div class="form-group">
+        <label>COURSE OF INTEREST</label>
+        <select>
+          <option value="">Select a program...</option>
+          <option>Web Development</option>
+          <option>Mobile App Development</option>
+          <option>AI & Machine Learning</option>
+          <option>UI/UX Design</option>
+          <option>Cybersecurity</option>
+          <option>Data Science & Analytics</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>MESSAGE</label>
+        <textarea placeholder="Tell us a bit about yourself and your goals..."></textarea>
+      </div>
+      <button class="btn-submit" onclick="submitForm()">SEND MESSAGE →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     FOOTER
+═══════════════════════════════════ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="images/Bright horizen logo.png" alt="Bright Horizons">
+      <p>Bright Horizons is Karachi's leading software house and computer academy, committed to transforming lives through world-class technology education and innovative software solutions.</p>
+    </div>
+
+    <div>
+      <div class="footer-heading">QUICK LINKS</div>
+      <div class="footer-links">
+        <a href="#about">About Us</a>
+        <a href="#courses">Our Courses</a>
+        <a href="#team">Our Team</a>
+        <a href="#faqs">FAQs</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+
+    <div>
+      <div class="footer-heading">PROGRAMS</div>
+      <div class="footer-links">
+        <a href="#courses">Web Development</a>
+        <a href="#courses">Mobile Apps</a>
+        <a href="#courses">AI & ML</a>
+        <a href="#courses">UI/UX Design</a>
+        <a href="#courses">Cybersecurity</a>
+        <a href="#courses">Data Science</a>
+      </div>
+    </div>
+
+    <div>
+      <div class="footer-heading">CONTACT INFO</div>
+      <div class="footer-links">
+        <a href="#">Karachi, Pakistan</a>
+        <a href="#">+92 300 0000000</a>
+        <a href="#">info@brighthorizons.com</a>
+        <a href="#">Mon–Sat 9AM–9PM</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div>© 2025 <span>Bright Horizons</span>. All rights reserved. Built with ❤️ in Pakistan.</div>
+    <div class="footer-social">
+      <a href="#">in</a>
+      <a href="#">𝕏</a>
+      <a href="#">f</a>
+      <a href="#">▶</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════
+     SCRIPTS
+═══════════════════════════════════ -->
+<script>
+  /* ── PARTICLES ── */
+  (function() {
+    const container = document.getElementById('particles');
+    for (let i = 0; i < 35; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.cssText = `--x:${Math.random()*100}%;--dur:${8+Math.random()*12}s;--delay:${-Math.random()*20}s;`;
+      container.appendChild(p);
+    }
+  })();
+
+  /* ── SCROLL REVEAL ── */
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+
+  /* ── STICKY HEADER ── */
+  window.addEventListener('scroll', () => {
+    const h = document.getElementById('header');
+    h.style.background = window.scrollY > 60
+      ? 'rgba(5,8,20,0.97)'
+      : 'rgba(10,14,39,0.85)';
+  });
+
+  /* ── HAMBURGER ── */
+  function toggleMenu() {
+    const nav = document.getElementById('mobileNav');
+    nav.classList.toggle('open');
+  }
+
+  /* ── FAQ ACCORDION ── */
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const allItems = document.querySelectorAll('.faq-item');
+    allItems.forEach(i => { if (i !== item) i.classList.remove('open'); });
+    item.classList.toggle('open');
+  }
+
+  /* ── FORM SUBMIT ── */
+  function submitForm() {
+    const btn = document.querySelector('.btn-submit');
+    btn.textContent = '✔ MESSAGE SENT!';
+    btn.style.background = 'linear-gradient(135deg, #1a8a3a, #00c87a)';
+    setTimeout(() => {
+      btn.textContent = 'SEND MESSAGE →';
+      btn.style.background = '';
+    }, 3000);
+  }
+
+  /* ── SMOOTH ACTIVE NAV ── */
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav a:not(.nav-cta)');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(sec => {
+      if (window.scrollY >= sec.offsetTop - 120) current = sec.getAttribute('id');
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#'+current ? 'var(--cyan)' : '';
+    });
+  });
+</script>
+</body>
+</html>
